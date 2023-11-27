@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Rock Foundation Game</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+    <link rel="icon" id="logo" href="logo.png">
+
+    <!-- Définir le logo pour le mode sombre -->
+    <link rel="icon" id="dark-mode-logo" href="logol.png" media="(prefers-color-scheme: dark)">
+    <style>
+        #logo {
+            display: block;
+        }
+
+        #dark-mode-logo {
+            display: none;
+        }
+    </style>
+    <script>
+        const darkModeLogo = document.getElementById('dark-mode-logo');
+        const lightModeLogo = document.getElementById('logo');
+
+        // Vérifier si le mode de couleur est sombre
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            darkModeLogo.style.display = 'block';
+            lightModeLogo.style.display = 'none';
+        }
+
+        // Écouter les changements dans le mode de couleur
+        window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+            if (e.matches) {
+                // Mode sombre activé
+                darkModeLogo.style.display = 'block';
+                lightModeLogo.style.display = 'none';
+            } else {
+                // Mode clair activé
+                darkModeLogo.style.display = 'none';
+                lightModeLogo.style.display = 'block';
+            }
+        });
+    </script>
+
+    <style>
+        *{
+            font-family: 'Helvetica', Arial, sans-serif;
+
+        }
+        #main {
+            background-color: #f2f2f2;
+            font-family: 'Helvetica', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        canvas {
+            margin-top: 20px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            max-width: 100%; /* Rend le canvas responsive */
+            height: auto;
+        }
+
+        #spin {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 10px 20px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 50%; /* Rend le bouton circulaire */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #spin:hover {
+            background-color: #2980b9;
+        }
+
+        /* Le reste du style Bootstrap reste inchangé */
+    </style>
+      <style>
+        .animation-container {
+        background: rgba(0, 0, 0, 0.6); /* Couleur noire avec une opacité de 0.7 */
+        color: white;
+        text-align: center;
+        padding: 20px;
+        height: 60vh;
+        position: relative;
+        }
+
+        .animation-container::before {
+        content: "";
+        background: url(charity.webp) no-repeat center;
+        background-size: cover;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        opacity: 0.5; /* Opacité de l'image de fond */
+        z-index: -1;
+        }
+    
+        .animation-text {
+          display: inline-block;
+          font-size: 50px;
+        }
+      </style>
+    
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand">
+                <img src="logo.png" alt="" height="80" class="d-block align-text-top mb-0">
+                <small class="d-block small text-secondary mt-0" style="font-size: 8px; width: 100px;">The smallest thing makes the biggest difference</small>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                   <span class="h5"><a class="nav-link active" aria-current="page" href="#home">Home</a></span>
+                   <span class="h5"><a class="nav-link" href="#about">About</a></span>
+                   <span class="h5"><a class="nav-link" href="#main">Play now</a></span>
+                   <span class="h5"><a class="nav-link" href="#participate-support">Support us</a></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+        
+    <div id="home" class="col-12">
+    <div class="animation-container pt-5">
+        <h2 class="text-center  mt-5">The Rock Johnson Foundation</h2>
+        <div id="animationText" class="animation-text"></div><span class="animation-text">|</span>
+        <br>
+        <a href="#main" class="btn btn-lg btn-outline-light shadow-none my-5">Play now</a>
+    </div>
+    </div>
+
+    <div class="container">
+        <section id="about" class="py-5 text-center">
+            <div class="row">
+                <h2>About <br> __________<br><br></h2>
+                <p class="lead col-md-6">
+                    The General Foundation, founded several years ago, is committed to charitable actions
+                    aimed at improving the lives of people in need. Our long history reflects our
+                    dedication to charity and the continuous support we provide to various causes.
+                </p>
+                <p class="lead col-md-6">
+                    Welcome to our site dedicated to the Charity Lottery. Our mission is to give back to the
+                    community in a unique way. Participate for free in our lottery, and if you win,
+                    consider your reward as an act of charity from the Charity Lottery Foundation. We believe in the power of generosity to create a significant impact and
+                    change lives.
+                </p>
+            </div>
+        </section>
+    </div>
+              
+    <div id="main">
+        <h2 class="text-center" >Play now <br> __________<br><br></h2>
+
+        <canvas id="canvas" width="500" height="500" class="border-0 m-0 p-0 rounded"></canvas>
+        <button class="btn btn-primary btn-lg mb-4 " onclick="spin()" id="spinButton">Spin</button>
+    </div>
+
+    <div class="modal fade" id="resultModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="resultModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div id="resultText" class="alert alert-success w-100">
+                    <!-- The result will be displayed here -->
+                </div>
+            </div>
+            <div class="modal-body">
+                <h6>Please fill out the form for the next steps:</h6>
+                <form
+                    id="my-form"
+                    class="row" 
+                    action="https://formspree.io/f/xvojjabz"
+                    method="POST"
+                >
+                    <div class="mb-3 col-6">
+                        <label for="inputFirstName" class="form-label">First Name</label>
+                        <input type="text" class="form-control" id="inputFirstName" name="first_name" placeholder="First Name" required>
+                    </div>
+                    <div class="mb-3 col-6">
+                        <label for="inputLastName" class="form-label">Last Name</label>
+                        <input type="text" class="form-control" id="inputLastName" name="last_name" placeholder="Last Name" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputNumber" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control" id="inputNumber" name="phone_number" placeholder="Phone Number" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputEmail" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email">
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputCountry" class="form-label">Country</label>
+                        <input type="text" class="form-control" id="inputCountry" name="country" placeholder="Country" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputAddress" class="form-label">Delivery Address</label>
+                        <textarea type="text" class="form-control" id="inputAddress" name="delivery_address" placeholder="Address" required></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <input type="hidden" class="form-control" id="inputkdo" name="gift" value="" disabled>
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary w-100">Send</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer d-none">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="retryBtn" data-dismiss="modal"
+                    style="display: none;">Retry</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <div class="modal fade" id="confirmationModal" tabindex="-1" role="dialog" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmationModalLabel">Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Thank you for submitting your information. You will be contacted within a few hours or days for confirmation.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById("my-form").addEventListener("submit", function (event) {
+        event.preventDefault();
+        var form = event.target;
+        var data = new FormData(form);
+
+        // Ajouter le champ inputkdo au FormData
+        var inputkdoValue = document.getElementById("inputkdo").value;
+        data.append("gift", inputkdoValue);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", form.action, true);
+        xhr.setRequestHeader("Accept", "application/json");
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    // Succès
+                    form.reset();
+                    // Fermer le premier popup
+                    $('#resultModal').modal('hide');
+                    // Afficher le deuxième popup
+                    $('#confirmationModal').modal('show');
+                    // Désactiver le bouton "Spin" et stocker dans le localstorage
+                    document.getElementById("spinButton").disabled = true;
+                    localStorage.setItem("spinButtonDisabled", "true");
+                } else {
+                    // Gestion des erreurs
+                    console.error("Erreur lors de la soumission du formulaire:", xhr.responseText);
+                }
+            }
+        };
+
+        xhr.send(data);
+    });
+
+    // Vérifier si le bouton "Spin" doit être désactivé
+    var spinButtonDisabled = localStorage.getItem("spinButtonDisabled");
+    if (spinButtonDisabled === "true") {
+        document.getElementById("spinButton").disabled = true;
+        document.getElementById("spinButton").innerText = "You've already played";
+    }
+    </script>
+    
+    <section id="testimonials" class="container">
+        <div class="row d-flex justify-content-center pt-5">
+            <div class="col-md-10 col-xl-8 text-center">
+                <h2 class="text-center">Testimonials <br> __________<br><br></h2>
+                <p class="mb-4 pb-2 mb-md-5 pb-md-0">
+                    Discover what our happy winners have to say about their experience with the Charity Lottery.
+                </p>
+            </div>
+        </div>
+    
+        <div class="row text-center">
+            <div class="col-md-4 mb-5 mb-md-0">
+                <div class="d-flex justify-content-center mb-4">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(1).webp"
+                        class="rounded-circle shadow-1-strong" width="150" height="150" />
+                </div>
+                <h5 class="mb-3">Maria Sanchez</h5>
+                <h6 class="text-primary mb-3">Spain</h6>
+                <p class="px-xl-3">
+                    <i class="fas fa-quote-left pe-2"></i>I couldn't believe my luck when I found out I had won
+                    the lottery. It truly changed my life, and I am grateful to the Lottery Charity Foundation.
+                </p>
+            </div>
+            <div class="col-md-4 mb-5 mb-md-0">
+                <div class="d-flex justify-content-center mb-4">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(2).webp"
+                        class="rounded-circle shadow-1-strong" width="150" height="150" />
+                </div>
+                <h5 class="mb-3">Luise Rodriguez</h5>
+                <h6 class="text-primary mb-3">Mexico</h6>
+                <p class="px-xl-3">
+                    <i class="fas fa-quote-left pe-2"></i>Winning the lottery was an incredible surprise. It allowed me to
+                    fulfill my dreams and support charitable causes close to my heart.
+                </p>
+            </div>
+            <div class="col-md-4 mb-0">
+                <div class="d-flex justify-content-center mb-4">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Avatars/img%20(9).webp"
+                        class="rounded-circle shadow-1-strong" width="150" height="150" />
+                </div>
+                <h5 class="mb-3">Giulia Rossi</h5>
+                <h6 class="text-primary mb-3">Italy</h6>
+                <p class="px-xl-3">
+                    <i class="fas fa-quote-left pe-2"></i>Winning the lottery was an unexpected blessing. It opened up
+                    new opportunities for me and my family, and I am grateful for this incredible chance.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="participate-support" class="py-5 text-center bg-light">
+        <div class="container">
+            <h2>Participate / Support <br> __________<br><br></h2>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h3>Participate in Our Charity Lottery</h3>
+                    <p class="lead">
+                        Ready to try your luck? Play now to participate in our lottery and have the chance to win incredible rewards.
+                    </p>
+                    <a href="#main" class="btn btn-primary btn-lg">Play now</a>
+                </div>
+                <div class="col-md-6">
+                    <h3>Support The General Foundation</h3>
+                    <p class="lead">
+                        If you prefer to support the Foundation in another way, you can contribute by making a donation.
+                        Your generosity helps us continue our mission and make a difference in the lives of those in need.
+                    </p>
+                    <a href="mailto:foundationtherock604@gmail.com?subject=I%20want%20to%20make%20a%20donation%20to%20support%20the%20Charity%20Lottery" class="btn btn-outline-primary btn-lg">
+                        <i class="fas fa-envelope"></i> Make a donation
+                      </a>                      
+                </div>
+            </div>
+        </div>
+    </section>
+        
+    <footer class="text-center text-lg-start bg-dark text-light py-4">
+
+        <!-- Section: Links  -->
+        <section class="mt-3">
+            <div class="container text-center text-md-start">
+                <!-- Grid row -->
+                <div class="row mt-3">
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold mb-4">
+                            <img src="logol.png" alt="" height="80" class="d-block align-text-top mb-0">
+                            <small class="d-block small mt-0" style="font-size: 8px; width: 150px;">The smallest thing makes the biggest difference</small>
+                        </h6>
+                        <p>
+                            Engaged in charitable actions to improve the lives of people in need.
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+    
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase text-primary fw-bold mb-4">
+                            Useful Links
+                        </h6>
+                        <p>
+                            <a href="#about" class="text-reset">About</a>
+                        </p>
+                        <p>
+                            <a href="#participate-support" class="text-reset">Participate / Support</a>
+                        </p>
+                        <p>
+                            <a href="#testimonials" class="text-reset">Testimonials</a>
+                        </p>
+                        <p>
+                            <a href="" class="text-reset link" data-bs-toggle="modal" data-bs-target="#privacyModal">
+                                Privacy Policy
+                            </a>
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+    
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-4 col-xl-4 mx-auto mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase text-primary fw-bold mb-4">Contact</h6>
+                        <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+                        <p>
+                            <i class="fas fa-envelope me-3"></i>
+                            foundationtherock604@gmail.com
+                        </p>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row -->
+            </div>
+        </section>
+        <!-- Section: Links  -->
+    
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(255, 255, 255, 0.1);">
+            © 2023 The Rock Johnson Foundation. All rights reserved.
+        </div>
+        <!-- Copyright -->
+    </footer>
+    
+    <div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="privacyModalLabel">Privacy Policy</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <!-- Your privacy policy content -->
+                    <p>The Rock Johnson Foundation places great importance on the privacy of its users. This privacy policy describes the information we collect, how we use and protect it, and the choices you have regarding this information.</p>
+    
+                    <h3>Information We Collect</h3>
+                    <hr>
+                    <h4>Personal Information</h4>
+                    <p>When you participate in our charity lottery or use our services, we may collect personal information such as your name, address, phone number, and email address. This information is necessary for lottery management and to contact you in case of winning.</p>
+    
+                    <h4>Non-Personal Information</h4>
+                    <p>We may also collect non-personal information such as aggregated demographic data and information about your use of our website for analysis and improvement of our services.</p>
+                    <br>
+                    <h3>How We Use Your Information</h3>
+                    <hr>
+                    <p>We use your personal information to:</p>
+                    <ul>
+                        <li>Manage participation in the charity lottery.</li>
+                        <li>Contact you in case of winning.</li>
+                        <li>Respond to your questions and requests.</li>
+                        <li>Improve our services and personalize your experience.</li>
+                    </ul>
+                    <p>We do not sell, trade, or rent your personal information to third parties for commercial purposes.</p>
+                    <br>
+                    <h3>Protection of Your Information</h3>
+                    <hr>
+                    <p>We implement appropriate security measures to protect your personal information from unauthorized access, alteration, disclosure, or destruction.</p>
+                    <br>
+                    <h3>Cookies</h3>
+                    <hr>
+                    <p>Our website may use cookies to enhance your user experience. You can configure your browser to refuse all cookies or to alert you when a cookie is sent.</p>
+                    <br>
+                    <h3>Sharing of Information</h3>
+                    <hr>
+                    <p>We do not share your personal information with third parties, except in the following cases:</p>
+                    <ul>
+                        <li>When necessary to respond to your requests.</li>
+                        <li>When required by law or to protect our legal rights.</li>
+                    </ul>
+                    <br>
+                    <h3>Your Choices</h3>
+                    <hr>
+                    <p>You can choose not to provide certain personal information, but this may affect your ability to participate in the charity lottery.</p>
+                    <br>
+                    <h3>Changes to the Privacy Policy</h3>
+                    <hr>
+                    <p>We reserve the right to update this privacy policy at any time. Changes will be posted on this page with the date of the last update.</p>
+                    <br>
+                    <h3>Contact Us</h3>
+                    <hr>
+                    <p>If you have any questions regarding this privacy policy, please contact us at [email address] or [postal address].</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+      
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          const textArray = ["Charity Lottery Platform", "Welcome to you!", "Try your luck now"];
+          let textIndex = 0;
+          let letterIndex = 0;
+          let isDeleting = false;
+      
+          function typeAnimation() {
+            const currentText = textArray[textIndex];
+            const textContainer = document.getElementById("animationText");
+      
+            if (isDeleting) {
+              textContainer.textContent = currentText.substring(0, letterIndex - 1);
+            } else {
+              textContainer.textContent = currentText.substring(0, letterIndex + 1);
+            }
+      
+            if (isDeleting) {
+              letterIndex--;
+            } else {
+              letterIndex++;
+            }
+      
+            if (!isDeleting && letterIndex === currentText.length + 1) {
+              isDeleting = true;
+              setTimeout(() => typeAnimation(), 5000);
+            } else if (isDeleting && letterIndex === 0) {
+              isDeleting = false;
+              textIndex = (textIndex + 1) % textArray.length;
+              setTimeout(() => typeAnimation(), 500);
+            } else {
+              setTimeout(() => typeAnimation(), 50);
+            }
+          }
+      
+          typeAnimation();
+        });
+      </script>
+      
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.querySelector('form');
+    
+            form.addEventListener('submit', function (event) {
+                // event.preventDefault(); // Empêcher le comportement par défaut du formulaire (envoi)
+    
+                // Récupérer les valeurs du formulaire
+                const firstName = document.getElementById('inputFirstName').value;
+                const lastName = document.getElementById('inputLastName').value;
+                const phoneNumber = document.getElementById('inputNumber').value;
+                const email = document.getElementById('inputEmail').value;
+                const country = document.getElementById('inputCountry').value;
+                const address = document.getElementById('inputAddress').value;
+                const kdo = document.getElementById('inputkdo').value;
+    
+                // Afficher les informations dans la console
+                console.log('Prénom:', firstName);
+                console.log('Nom:', lastName);
+                console.log('Numéro de téléphone:', phoneNumber);
+                console.log('Email:', email);
+                console.log('Pays:', country);
+                console.log('Adresse:', address);
+                console.log('Prix:', kdo);
+            });
+        });
+    </script>
+    
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+    <script>
+        const options = ["250.000€", "Lamborghini\nHuracán Evo", "750.000€", "lose", "Porsche 911\nTurbo S", "500.000€"];
+        const colors = ['#3498db', '#e74c3c', '#2ecc71', '#e67e22', '#3498db', '#9b59b6', '#e74c3c', '#2ecc71'];
+
+        let startAngle = 0;
+        const arc = Math.PI / (options.length / 2);
+        let spinTimeout = null;
+
+        let spinAngleStart = 10;
+        let spinTime = 0;
+        let spinTimeTotal = 0;
+
+        let ctx;
+
+        function spin() {
+            spinAngleStart = Math.random() * 10 + 10;
+            spinTime = 0;
+            spinTimeTotal = Math.random() * 3 + 4 * 1000;
+
+            // Désactiver le bouton Spin pendant la rotation
+            document.getElementById("spinButton").disabled = true;
+
+            rotateWheel();
+        }
+
+        function rotateWheel() {
+            spinTime += 30;
+            if (spinTime >= spinTimeTotal) {
+                stopRotateWheel();
+                return;
+            }
+            const spinAngle = spinAngleStart - easeOut(spinTime, 0, spinAngleStart, spinTimeTotal);
+            startAngle += (spinAngle * Math.PI / 180);
+            drawRouletteWheel();
+            requestAnimationFrame(rotateWheel);
+        }
+
+        function stopRotateWheel() {
+        // Activer à nouveau le bouton Spin après la rotation
+        document.getElementById("spinButton").disabled = false;
+
+        const degrees = startAngle * 180 / Math.PI + 90;
+        const arcd = arc * 180 / Math.PI;
+        const index = Math.floor((360 - degrees % 360) / arcd);
+
+        // Affichage du résultat
+        const resultText = document.getElementById('resultText');
+        const retryBtn = document.getElementById('retryBtn');
+        const spinButton = document.getElementById('spinButton');
+        const kdoInput = document.getElementById('inputkdo');
+
+        if (options[index] === 'lose') {
+            // Changer le texte du bouton en "Retry"
+            spinButton.innerText = "Retry";
+
+            // Rendre visible le bouton Retry uniquement en cas de perte
+            retryBtn.style.display = 'inline-block';
+
+            // Mettre à jour la valeur du champ "Prix" avec une chaîne vide en cas de perte
+            kdoInput.value = '';
+        } else {
+            resultText.innerHTML = `Congratulations! You are one of the winners of: ${options[index]}! 🎉`;
+            retryBtn.style.display = 'none';
+
+            // Mise à jour de la valeur du champ "Prix" avec la valeur gagnée
+            kdoInput.value = options[index];
+
+            // Afficher le modal uniquement en cas de victoire
+            $('#resultModal').modal('show');
+        }
+    }
+
+        function easeOut(t, b, c, d) {
+            const ts = (t /= d) * t;
+            const tc = ts * t;
+            return b + c * (tc + -3 * ts + 3 * t);
+        }
+
+        function drawRouletteWheel() {
+            const canvas = document.getElementById("canvas");
+            if (canvas.getContext) {
+                const outsideRadius = 200;
+                const textRadius = 150; /* Ajuste la distance du texte du centre */
+                const insideRadius = 100; /* Ajuste la taille du cercle interne */
+
+                ctx = canvas.getContext("2d");
+                ctx.clearRect(0, 0, 500, 500);
+
+                for (let i = 0; i < options.length; i++) {
+                    const angle = startAngle + i * arc;
+                    ctx.fillStyle = colors[i];
+
+                    ctx.beginPath();
+                    ctx.arc(250, 250, outsideRadius, angle, angle + arc, false);
+                    ctx.arc(250, 250, insideRadius, angle + arc, angle, true);
+                    ctx.stroke();
+                    ctx.fill();
+
+                    ctx.save();
+                    ctx.shadowOffsetX = -1;
+                    ctx.shadowOffsetY = -1;
+                    ctx.shadowBlur = 5;
+                    ctx.shadowColor = "rgba(0, 0, 0, 0.3)";
+                    ctx.fillStyle = "#fff"; /* Couleur du texte */
+                    ctx.translate(250 + Math.cos(angle + arc / 2) * textRadius,
+                        250 + Math.sin(angle + arc / 2) * textRadius);
+                    ctx.rotate(angle + arc / 2 + Math.PI / 2);
+                    const lines = options[i].split('\n');
+                    ctx.font = 'bold 20px Helvetica, Arial'; /* Ajuste la taille de la police */
+                    for (let j = 0; j < lines.length; j++) {
+                        ctx.fillText(lines[j], -ctx.measureText(lines[j]).width / 2, j * 30);
+                    }
+                    ctx.restore();
+                }
+
+                // Flèche
+                ctx.fillStyle = "#333"; /* Couleur de la flèche */
+                ctx.beginPath();
+                ctx.moveTo(250 - 4, 250 - (outsideRadius + 5));
+                ctx.lineTo(250 + 4, 250 - (outsideRadius + 5));
+                ctx.lineTo(250 + 4, 250 - (outsideRadius - 5));
+                ctx.lineTo(250 + 9, 250 - (outsideRadius - 5));
+                ctx.lineTo(250 + 0, 250 - (outsideRadius - 13));
+                ctx.lineTo(250 - 9, 250 - (outsideRadius - 5));
+                ctx.lineTo(250 - 4, 250 - (outsideRadius - 5));
+                ctx.lineTo(250 - 4, 250 - (outsideRadius + 5));
+                ctx.fill();
+            }
+        }
+
+        drawRouletteWheel();
+    </script>
+</body>
+
+</html>
